@@ -1,0 +1,41 @@
+.containerr{
+  margin: 22px;
+  box-sizing: border-box;
+}
+body{
+  background: #10141e;
+}
+.scroll{
+  overflow: hidden;
+  position: absolute;
+}
+
+.scroll-bar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-bar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;   
+}/* Keyframes for horizontal scrolling */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Apply animation to the scrolling container */
+.scrolling-container {
+  display: flex;
+  overflow: hidden; /* Hide scrollbar */
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+.scrolling-content {
+  display: flex;
+  gap: 40px;
+  animation: scroll 100s linear infinite; /* Adjust duration as needed */
+}
