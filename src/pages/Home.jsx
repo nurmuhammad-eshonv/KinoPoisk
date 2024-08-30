@@ -7,6 +7,7 @@ import { DataContext } from "../App";
 
 function Home() {
   const [items, setItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const { data, setData } = useContext(DataContext);
 
   function handleBringData(item) {
@@ -25,6 +26,11 @@ function Home() {
       .then((data) => setItems(data.docs));
   }, []);
 
+  const filteredItems = items.filter((item) =>
+    (item.name ? item.name.toLowerCase() : "")
+      .includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex h-[100vh]">
       {/* Fixed Sidebar */}
@@ -34,13 +40,13 @@ function Home() {
 
       {/* Main Content */}
       <div className="ml-[106px] p-4 w-full">
-        <Input />
+        <Input searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <h1 className="text-[32px] mt-[32px] text-white">Trending</h1>
 
         <div className="mt-[25px] max-w-[1380px] overflow-hidden">
           <div className="scrolling-container">
             <div className="scrolling-content">
-              {items.map((item, index) => (
+              {filteredItems.map((item, index) => (
                 <div
                   key={index}
                   style={{
@@ -79,9 +85,9 @@ function Home() {
           Recommended for you
         </h1>
 
-        <div className="flex gap-[40px] flex-wrap justify-between mt-[32px] ml-4 mr-4">
-          {items.length > 0 &&
-            items.map((item, index) => (
+        <div className="flex gap-[40px] flex-wrap mt-[32px] ml-4 mr-4">
+          {filteredItems.length > 0 &&
+            filteredItems.map((item, index) => (
               <div
                 key={index}
                 className="w-[300px] h-[246px] rounded-xl relative"
