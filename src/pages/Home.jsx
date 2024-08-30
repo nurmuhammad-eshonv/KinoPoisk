@@ -26,62 +26,65 @@ function Home() {
   }, []);
 
   return (
-    <div className="containerr flex items-start gap-[36px]">
-      <SideMenu />
-      <div>
-        <div>
-          <Input />
-          <h1 className="text-[32px] mt-[32px] text-white">Trending</h1>
+    <div className="flex h-[100vh]">
+      {/* Fixed Sidebar */}
+      <div className="fixed top-10 left-6 h-full">
+        <SideMenu />
+      </div>
 
-          <div className="mt-[25px] max-w-[1380px] overflow-hidden">
-            <div className="scrolling-container">
-              <div className="scrolling-content">
-                {items.map((item, index) => (
+      {/* Main Content */}
+      <div className="ml-[106px] p-4 w-full">
+        <Input />
+        <h1 className="text-[32px] mt-[32px] text-white">Trending</h1>
+
+        <div className="mt-[25px] max-w-[1380px] overflow-hidden">
+          <div className="scrolling-container">
+            <div className="scrolling-content">
+              {items.map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    backgroundImage: `url(${
+                      item.poster?.previewUrl ||
+                      "https://picsum.photos/470/309"
+                    })`,
+                  }}
+                  className="w-[470px] h-[230px] rounded-lg pt-[144px] p-[24px] relative"
+                >
                   <div
-                    key={index}
-                    style={{
-                      backgroundImage: `url(${
-                        item.poster?.previewUrl ||
-                        "https://picsum.photos/470/309"
-                      })`,
-                    }}
-                    className="w-[470px] h-[230px] rounded-lg pt-[144px] p-[24px] relative"
+                    onClick={() => handleBringData(item)}
+                    className="bg-slate-500 flex items-center justify-center w-10 h-10 rounded-full absolute -mt-[130px] ml-[387px] cursor-pointer"
                   >
-                    <div
-                    disabled
-                      onClick={() => handleBringData(item)}
-                      className="bg-slate-500 flex items-center justify-center w-10 h-10 rounded-full absolute -mt-[130px] ml-[387px] cursor-pointer"
-                    >
-                      <CiBookmark className="text-white w-5 h-5" />
-                    </div>
-                    <div className="text-gray-100 text-[15px]">
-                      <p className="flex gap-3 items-center">
-                        <span>{item.year} •</span> <MdLocalMovies />
-                        <span>
-                          {item.genres?.map((genre) => genre.name).join(", ")} •{" "}
-                        </span>
-                        <span>{item.rating?.imdb || "N/A"}</span>
-                      </p>
-                    </div>
-                    <p className="text-[24px] text-white">
-                      {item.name || item.alternativeName}
+                    <CiBookmark className="text-white w-5 h-5" />
+                  </div>
+                  <div className="text-gray-100 text-[15px]">
+                    <p className="flex gap-3 items-center">
+                      <span>{item.year} •</span> <MdLocalMovies />
+                      <span>
+                        {item.genres?.map((genre) => genre.name).join(", ")} •{" "}
+                      </span>
+                      <span>{item.rating?.imdb || "N/A"}</span>
                     </p>
                   </div>
-                ))}
-              </div>
+                  <p className="text-[24px] text-white">
+                    {item.name || item.alternativeName}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
+
         <h1 className="text-[32px] mt-[40px] text-white">
           Recommended for you
         </h1>
 
-        <div className="flex gap-[40px] flex-wrap justify-start mt-[32px]">
+        <div className="flex gap-[40px] flex-wrap justify-between mt-[32px] ml-4 mr-4">
           {items.length > 0 &&
             items.map((item, index) => (
               <div
                 key={index}
-                className="w-[300px] h-[246px] rounded-xl"
+                className="w-[300px] h-[246px] rounded-xl relative"
                 onClick={() => handleBringData(item)}
               >
                 <img

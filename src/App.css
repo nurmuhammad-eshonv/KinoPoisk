@@ -36,6 +36,6 @@ body{
 
 .scrolling-content {
   display: flex;
-  gap: 40px;
+  gap: 50px;
   animation: scroll 100s linear infinite; /* Adjust duration as needed */
 }
