@@ -1,20 +1,50 @@
+
 import React, { useState, useEffect, useContext } from "react";
 import SideMenu from "../components/SideMenu";
 import Input from "../components/Input";
 import { MdLocalMovies } from "react-icons/md";
 import { CiBookmark } from "react-icons/ci";
 import { DataContext } from "../App";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css"; 
 
 function Home() {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { data, setData } = useContext(DataContext);
-// console.log(items);
 
   function handleBringData(item) {
-    const updatedData = [...data, item];
-    setData(updatedData);
-    localStorage.setItem("bookmarkedMovies", JSON.stringify(updatedData));
+    const itemExists = data.some((dataItem) => dataItem.id === item.id);
+
+    if (itemExists) {
+      Toastify({
+        text: "Already added!",
+        duration: 3000,
+        close: true,
+        gravity: "top", 
+        position: "right", 
+        style: {
+          background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+        },
+        onClick: function() {}
+      }).showToast();
+    } else {
+      const updatedData = [...data, item];
+      setData(updatedData);
+      localStorage.setItem("bookmarkedMovies", JSON.stringify(updatedData));
+
+      Toastify({
+        text: "Movie bookmarked!",
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "right", 
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function() {} 
+      }).showToast();
+    }
   }
 
   useEffect(() => {
@@ -30,9 +60,7 @@ function Home() {
   const filteredItems = items.filter((item) =>
     (item.name ? item.name.toLowerCase() : "")
       .includes(searchTerm.toLowerCase())
-    
   );
-console.log(filteredItems);
 
   return (
     <div className="flex h-[100vh]">
