@@ -9,6 +9,7 @@ function Home() {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { data, setData } = useContext(DataContext);
+// console.log(items);
 
   function handleBringData(item) {
     const updatedData = [...data, item];
@@ -17,7 +18,7 @@ function Home() {
   }
 
   useEffect(() => {
-    fetch("https://api.kinopoisk.dev/v1.4/movie?rating.imdb=8-10&limit=30", {
+    fetch("https://api.kinopoisk.dev/v1.4/movie?rating.imdb=8-10&limit=100", {
       headers: {
         "X-API-KEY": "WPVCNA8-BFG4ZRF-N4W3SD4-8TRWN1B",
       },
@@ -29,7 +30,9 @@ function Home() {
   const filteredItems = items.filter((item) =>
     (item.name ? item.name.toLowerCase() : "")
       .includes(searchTerm.toLowerCase())
+    
   );
+console.log(filteredItems);
 
   return (
     <div className="flex h-[100vh]">
@@ -37,22 +40,20 @@ function Home() {
       <div className="fixed top-10 left-6 h-full">
         <SideMenu />
       </div>
-
-      {/* Main Content */}
+      
       <div className="ml-[106px] p-4 w-full">
         <Input searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <h1 className="text-[32px] mt-[32px] text-white">Trending</h1>
+        <h1 className="text-[32px] mt-[32px] text-white">Trending</h1>  
 
         <div className="mt-[25px] max-w-[1380px] overflow-hidden">
           <div className="scrolling-container">
             <div className="scrolling-content">
-              {filteredItems.map((item, index) => (
+              {items.map((item, index) => (
                 <div
                   key={index}
                   style={{
                     backgroundImage: `url(${
-                      item.poster?.previewUrl ||
-                      "https://picsum.photos/470/309"
+                      item.poster ? item.poster.previewUrl : "https://image.openmoviedb.com/kinopoisk-images/10592371/08982e09-7b03-42f5-8074-019920ca0e7c/orig"
                     })`,
                   }}
                   className="w-[470px] h-[230px] rounded-lg pt-[144px] p-[24px] relative"
