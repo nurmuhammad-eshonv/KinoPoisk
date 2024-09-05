@@ -17,7 +17,10 @@ body{
 .scroll-bar-hide {
   -ms-overflow-style: none;  
   scrollbar-width: none;   
-}/* Keyframes for horizontal scrolling */
+}
+
+
+/* Keyframes for horizontal scrolling */
 @keyframes scroll {
   0% {
     transform: translateX(0);
@@ -27,15 +30,14 @@ body{
   }
 }
 
-/* Apply animation to the scrolling container */
 .scrolling-container {
   display: flex;
-  overflow: hidden; /* Hide scrollbar */
-  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;
+  white-space: nowrap; 
 }
 
 .scrolling-content {
   display: flex;
   gap: 50px;
-  animation: scroll 500s linear infinite; /* Adjust duration as needed */
+  animation: scroll 500s linear infinite;
 }
